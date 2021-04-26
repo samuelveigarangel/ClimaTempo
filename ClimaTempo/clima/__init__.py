@@ -8,17 +8,6 @@ class Clima:
         self.token = token
         self.city = city
 
-    #registrar cidade para utilizar algumas consultas
-    def register_city(self, id_city):
-        """'http://apiadvisor.climatempo.com.br/api-manager/user-token/:5cca58af8cc349c15c55c1596219c717/locales' \
-                -H 'Content-Type: application/x-www-form-urlencoded' \
-                -d 'localeId[]='"""
-        url = 'http://apiadvisor.climatempo.com.br/api-manager/user-token/5cca58af8cc349c15c55c1596219c717/locales'
-        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-        local = 'localeId[]=' + str(id_city)
-        response = requests.put(url, headers=headers, data=local)
-        print(json.loads(response.text))
-
 
     ##obten id cidade
     def data_city(self):
@@ -27,6 +16,20 @@ class Clima:
         response = requests.get(url)
         date = json.loads(response.text)
         return date[0]['id']
+
+
+
+    #registrar cidade para utilizar algumas consultas
+    def register_city(self, id_city):
+        """'http://apiadvisor.climatempo.com.br/api-manager/user-token/5cca58af8cc349c15c55c1596219c717/locales' \
+                -H 'Content-Type: application/x-www-form-urlencoded' \
+                -d 'localeId[]='"""
+        url = 'http://apiadvisor.climatempo.com.br/api-manager/user-token/5cca58af8cc349c15c55c1596219c717/locales'
+        headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+        local = 'localeId[]=' + str(id_city)
+        response = requests.put(url, headers=headers, data=local)
+        print(json.loads(response.text))
+
 
     def clima_city(self):
         url = 'http://apiadvisor.climatempo.com.br/api/v1/weather/locale/8050/current?token=' + self.token
